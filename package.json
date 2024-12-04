@@ -2,13 +2,16 @@
   "name": "api-rest",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
   "keywords": [],
   "author": "Leonardo Batista",
   "license": "ISC",
   "description": "Criando API REST com node.js",
   "devDependencies": {
     "@types/node": "^20.14.12",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.4"
   }
 }
