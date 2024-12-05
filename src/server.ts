@@ -1,4 +1,5 @@
 import express from "express"
+import { myMiddleware } from "./middleware.ts/my-middleware"
 
 
  const PORT = 3333
@@ -6,6 +7,9 @@ import express from "express"
  const app = express()
  // Avisando ao express que ele vai receber dados em JSON
  app.use(express.json())
+
+ // Middleware global (Aplica para todas as rotas abaixo.)
+ //app.use(myMiddleware)
 
 /* Função da rota GET com parametros não nomeados (params)
 
@@ -35,7 +39,8 @@ import express from "express"
 
 
  // Função da rota POST  (body)
- app.post("/products", (request, response) => {
+ // Com Middleware local em uma rota especifica (myMiddleware)
+ app.post("/products",myMiddleware, (request, response) => {
     const {name, price} = request.body
 
     /* Para responder com um arquivo JSON basta colocar o codigo
