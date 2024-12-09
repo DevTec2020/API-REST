@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { myMiddleware } from "../middleware.ts/my-middleware"
+import { ProductsController } from "../controllers/ProductsController"; 
 
 const productsRoutes = Router()
+const productsController = new ProductsController()
 
 /* Função da rota GET com parametros não nomeados (params)
 
@@ -18,16 +20,9 @@ const productsRoutes = Router()
 */
 
 // Função da rota GET com parametros nomeados (query)
-productsRoutes.get("/", (request, response) => {
+productsRoutes.get("/", productsController.index)
     // /products?page=5&limit=20
 
-    //recuperando os parametros fornecidos na rota
-    const {page, limit} = request.query
-
-    // Retornando em tela os parametros nomeados
-    response.send(`Pagina ${page} de ${limit}`)
-
- })
 
 
  // Função da rota POST  (body)
@@ -40,23 +35,6 @@ productsRoutes.get("/", (request, response) => {
 
 
  // Com Middleware local em uma rota especifica (myMiddleware)
- productsRoutes.post("/",myMiddleware, (request, response) => {
-    const {name, price} = request.body
-
-    /* 
-    Para responder com um arquivo JSON basta colocar o codigo :
-    
-    response.json({ name, price })
-
-    Para Responder por texto em tela :
-
-    response.send(`O produto ${name} custa R$:${price}`)
-    */
-
-
-    
-
-    response.status(201).json({name, price, user_id: request.user_id })
- })
+ productsRoutes.post("/",myMiddleware,productsController.create)
 
  export { productsRoutes }
